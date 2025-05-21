@@ -11,7 +11,7 @@
 
 import { Gui, imperative } from "@zowe/zowe-explorer-api";
 import { TreeItemCollapsibleState, TreeItemLabel } from "vscode";
-import { CICSPlexTree } from ".";
+import { CICSPlexTree, CICSTree } from ".";
 import { ICICSTreeNode, IChildResource, IContainedResource, IResource } from "../doc";
 import { CICSSession, ResourceContainer } from "../resources";
 import IconBuilder from "../utils/IconBuilder";
@@ -26,6 +26,7 @@ export class CICSResourceContainerNode<T extends IResource> extends CICSTreeNode
 
   viewMore: boolean = false;
   refreshingDescription: boolean = false;
+  loading: boolean = false;
 
   constructor(
     label: string | TreeItemLabel,
@@ -72,7 +73,16 @@ export class CICSResourceContainerNode<T extends IResource> extends CICSTreeNode
     this.iconPath = this.containedResource?.meta ? IconBuilder.resource(this.containedResource) : IconBuilder.folder(folderOpen);
   }
 
+  setLoading(isLoading: boolean = true) {
+    this.loading = isLoading;
+  }
+
   async loadPageOfResources() {
+    if (this.loading) {
+      return;
+    }
+    this.setLoading();
+
     if (!this.viewMore) {
       this.childResource.resources.resetContainer();
     }
@@ -113,7 +123,7 @@ export class CICSResourceContainerNode<T extends IResource> extends CICSTreeNode
           b.getContainedResource().meta.getName(b.getContainedResource().resource)
         ) ?
           1
-        : -1
+          : -1
       );
 
     if (moreToFetch) {
@@ -121,11 +131,11 @@ export class CICSResourceContainerNode<T extends IResource> extends CICSTreeNode
     }
 
     this.refreshingDescription = true;
-    this.description = `${
-      this.childResource.resources.isFilterApplied() ? this.childResource.resources.getFilter() : ""
-    } [${resources.length} of ${this.childResource.resources.getTotalResources()}]`;
+    this.description = `${this.childResource.resources.isFilterApplied() ? this.childResource.resources.getFilter() : ""
+      } [${resources.length} of ${this.childResource.resources.getTotalResources()}]`;
 
-    this.getSessionNode().getParent()._onDidChangeTreeData.fire(this);
+    this.setLoading(false);
+    (this.getSessionNode().getParent() as CICSTree)._onDidChangeTreeData.fire(this);
   }
 
   async getChildren(): Promise<(ICICSTreeNode | TextTreeItem)[]> {
