@@ -19,8 +19,8 @@ export class ResourceInspectorView {
 
   constructor(
     private readonly extensionUri: Uri,
-    private readonly data: { label: string; attributes: any; resource: string; details: any }
-  ) {}
+    private readonly data: { label: string; attributes: any; details: any; }
+  ) { }
 
   initializeWebview(webviewView: WebviewView) {
     this._view = webviewView;
@@ -31,7 +31,6 @@ export class ResourceInspectorView {
 
     webviewView.webview.onDidReceiveMessage(async (message) => {
       if (message.command === "init") {
-        console.log("React app initialized");
         await this.sendDataToReactApp();
       }
     });
@@ -40,20 +39,15 @@ export class ResourceInspectorView {
 
   private async sendDataToReactApp() {
     if (this._view) {
-      try {
-        await this._view.webview.postMessage({
-          command: "init",
-          data: this.data, // Use data from the constructor
-        });
-      } catch (error) {
-        console.error("Failed to send data to React app:", error);
-      }
+      await this._view.webview.postMessage({
+        command: "init",
+        data: this.data,
+      });
     }
   }
-  //reusing the function from Zowe-explorer-api
+
   private _getHtmlForWebview(webview: Webview): string {
     const scriptUri = webview.asWebviewUri(Uri.joinPath(this.extensionUri, "dist", "resourceInspectorPanelView.js"));
-    // const codiconsUri = webview.asWebviewUri(Uri.joinPath(this.extensionUri, "src", "webviews", "dist", "codicons", "codicon.css"));
     const nonce = randomUUID();
 
     return Mustache.render(HTMLTemplate.default, {

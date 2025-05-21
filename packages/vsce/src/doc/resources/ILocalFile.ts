@@ -13,6 +13,12 @@ import { IResource } from "./IResource";
 
 export interface ILocalFile extends IResource {
   file: string;
+  vsamtype: string;
+  read: string;
+  browse: string;
+  keylength: string;
+  recordsize: string;
+  dsname: string;
   enablestatus: string;
   openstatus: string;
 }

@@ -21,7 +21,7 @@ export class ResourceInspectorViewProvider implements WebviewViewProvider {
   constructor(
     private readonly extensionUri: Uri,
     private readonly treeview: TreeView<any>
-  ) {}
+  ) { }
 
   public static getInstance(extensionUri: Uri, treeview: TreeView<any>): ResourceInspectorViewProvider {
     if (!this.instance) {
@@ -38,7 +38,7 @@ export class ResourceInspectorViewProvider implements WebviewViewProvider {
     ResourceInspectorViewProvider.refreshed = true;
   }
 
-  reloadData(data: { label: string; attributes: any; resource: string; details: any }, webviewView: WebviewView) {
+  reloadData(data: { label: string; attributes: any; details: any; }, webviewView: WebviewView) {
     this._manager = new ResourceInspectorView(this.extensionUri, data);
     if (ResourceInspectorViewProvider.refreshed) {
       this.resolveWebviewView(webviewView);

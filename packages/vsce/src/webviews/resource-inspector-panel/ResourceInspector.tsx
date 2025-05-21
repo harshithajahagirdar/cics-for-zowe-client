@@ -24,14 +24,13 @@ import * as vscode from "../common/vscode";
 
 import "../css/style.css";
 
-const RIPanelView = () => {
+const ResourceInspector = () => {
   const [search, setSearch] = React.useState("");
 
   const [riArgs, setRIArgs] = React.useState<{
     label: string;
-    details: { [key: string]: string };
-    resource: { [key: string]: string };
-    attributes: { [key: string]: string };
+    details: { [key: string]: string; };
+    attributes: { [key: string]: string; };
   }>();
 
   React.useEffect(() => {
@@ -83,7 +82,7 @@ const RIPanelView = () => {
                   <VscodeTextfield
                     type="text"
                     placeholder="Keyword search..."
-                    onInput={(e: { target: HTMLInputElement }) => setSearch(e.target.value)}
+                    onInput={(e: { target: HTMLInputElement; }) => setSearch(e.target.value)}
                     value={search}
                     className="search-style div-display-1"
                   ></VscodeTextfield>
@@ -111,4 +110,4 @@ const RIPanelView = () => {
   );
 };
 
-export default RIPanelView;
+export default ResourceInspector;

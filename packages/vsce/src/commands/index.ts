@@ -28,11 +28,11 @@ import { getOpenLocalFileCommand } from "./openLocalFileCommand";
 import { getPhaseInCommand } from "./phaseInCommand";
 import { getPurgeTaskCommand } from "./purgeTaskCommand";
 import { getRefreshCommand } from "./refreshCommand";
-import { getResourceInspectorforLocalFile, getResourceInspectorforProgramFile } from "./resourceInspectorViewCommand";
 import * as showAttributesCommands from "./showAttributesCommand";
 import * as showLogsCommands from "./showLogsCommand";
 import { getShowRegionSITParametersCommand } from "./showParameterCommand";
 import { viewMoreCommand } from "./viewMoreCommand";
+import { getResourceInspectorCommand } from "./resourceInspectorViewCommand";
 
 export const getCommands = (treeDataProv: CICSTree, treeview: TreeView<any>, context: ExtensionContext) => {
   return [
@@ -73,8 +73,7 @@ export const getCommands = (treeDataProv: CICSTree, treeview: TreeView<any>, con
     getInquireTransactionCommand(treeDataProv, treeview),
     getInquireProgramCommand(treeDataProv, treeview),
 
-    getResourceInspectorforProgramFile(context, treeview),
-    getResourceInspectorforLocalFile(context, treeview),
+    getResourceInspectorCommand(context, treeview),
     getToggleResourceSettingCommand(),
   ];
 };

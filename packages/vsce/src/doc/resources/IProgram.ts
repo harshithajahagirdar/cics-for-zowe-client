@@ -13,6 +13,10 @@ import { IResource } from "./IResource";
 
 export interface IProgram extends IResource {
   program: string;
+  progtype: string;
+  sharestatus: string;
+  length: string;
+  changeagrel: string;
   status: string;
   newcopycnt: string;
 }
