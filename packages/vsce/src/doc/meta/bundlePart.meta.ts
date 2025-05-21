@@ -51,4 +51,13 @@ export const BundlePartMeta: IResourceMeta<IBundlePart> = {
   getName(bundlePart: Resource<IBundlePart>) {
     return bundlePart.attributes.bundlepart;
   },
+
+  getHighlights(bundlePart: Resource<IBundlePart>) {
+    return [
+      {
+        key: "Bundle",
+        value: bundlePart.attributes.bundle,
+      },
+    ];
+  },
 };

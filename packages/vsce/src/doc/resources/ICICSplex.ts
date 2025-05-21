@@ -16,6 +16,5 @@ export interface ICICSplex extends IResource {
   cmasname: string;
   mpstatus: string;
   plexname: string;
-  status: string;
   sysid: string;
 }

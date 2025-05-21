@@ -44,9 +44,8 @@ export const LocalFileMeta: IResourceMeta<ILocalFile> = {
   },
 
   getContext: function (localFile: Resource<ILocalFile>): string {
-    return `${
-      CicsCmciConstants.CICS_CMCI_LOCAL_FILE
-    }.${localFile.attributes.enablestatus.toUpperCase()}.${localFile.attributes.openstatus.toUpperCase()}.${localFile.attributes.file}`;
+    return `${CicsCmciConstants.CICS_CMCI_LOCAL_FILE
+      }.${localFile.attributes.enablestatus.toUpperCase()}.${localFile.attributes.openstatus.toUpperCase()}.${localFile.attributes.file}`;
   },
 
   getIconName: function (localFile: Resource<ILocalFile>): string {
@@ -62,5 +61,38 @@ export const LocalFileMeta: IResourceMeta<ILocalFile> = {
 
   getName(localFile: Resource<ILocalFile>): string {
     return localFile.attributes.file;
+  },
+
+  getHighlights(resource: Resource<ILocalFile>) {
+    return [
+      {
+        key: "Open status",
+        value: resource.attributes.openstatus,
+      },
+      {
+        key: "Enabled status",
+        value: resource.attributes.enablestatus,
+      },
+      {
+        key: "Type",
+        value: resource.attributes.vsamtype,
+      },
+      {
+        key: "Permission",
+        value: `${resource.attributes.read}, ${resource.attributes.browse}`,
+      },
+      {
+        key: "Key length",
+        value: resource.attributes.keylength,
+      },
+      {
+        key: "Record size",
+        value: resource.attributes.recordsize,
+      },
+      {
+        key: "Data set name",
+        value: resource.attributes.dsname,
+      },
+    ];
   },
 };

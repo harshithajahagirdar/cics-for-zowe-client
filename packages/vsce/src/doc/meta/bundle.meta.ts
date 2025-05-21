@@ -53,5 +53,14 @@ export const BundleMeta: IResourceMeta<IBundle> = {
     return bundle.attributes.name;
   },
 
+  getHighlights(bundle: Resource<IBundle>) {
+    return [
+      {
+        key: "Bundle Directory",
+        value: bundle.attributes.bundledir,
+      },
+    ];
+  },
+
   childType: BundlePartMeta,
 };

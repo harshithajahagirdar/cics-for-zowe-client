@@ -60,4 +60,13 @@ export const TaskMeta: IResourceMeta<ITask> = {
   getName(resource: Resource<ITask>): string {
     return resource.attributes.task;
   },
+
+  getHighlights(resource: Resource<ITask>) {
+    return [
+      {
+        key: "Transaction ID",
+        value: resource.attributes.tranid,
+      },
+    ];
+  },
 };

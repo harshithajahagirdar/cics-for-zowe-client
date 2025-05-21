@@ -51,4 +51,13 @@ export const URIMapMeta: IResourceMeta<IURIMap> = {
   getName(resource: Resource<IURIMap>): string {
     return resource.attributes.name;
   },
+
+  getHighlights(resource: Resource<IURIMap>) {
+    return [
+      {
+        key: "Path",
+        value: resource.attributes.path,
+      },
+    ];
+  },
 };

@@ -42,4 +42,13 @@ export const PipelineMeta: IResourceMeta<IPipeline> = {
   getName(resource: Resource<IPipeline>): string {
     return resource.attributes.name;
   },
+
+  getHighlights(resource: Resource<IPipeline>) {
+    return [
+      {
+        key: "Status",
+        value: resource.attributes.status,
+      },
+    ];
+  },
 };

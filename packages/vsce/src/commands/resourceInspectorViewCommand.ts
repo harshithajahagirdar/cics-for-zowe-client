@@ -31,37 +31,9 @@ function getResourceViewProvider(
   extensionUri: Uri,
   treeview: TreeView<any>) {
   for (const item of selectedNodes) {
-    const resource = item.getContainedResource().resource.attributes;
-
-    const data = {
-      label: `${item.label}`,
-      attributes: resource,
-      details: {}
-    };
-
-    if (item.getContainedResource().meta.resourceName === "CICSProgram") {
-      data.details = {
-        status: "(Program File; " + (resource as IProgram).status + ")",
-        type: (resource as IProgram).progtype,
-        permission: (resource as IProgram).sharestatus,
-        keyLength: (resource as IProgram).length,
-        recordSize: (resource as IProgram).changeagrel,
-        dsName: (resource as IProgram).eyu_cicsname,
-      };
-    } else if (item.getContainedResource().meta.resourceName === "CICSLocalFile") {
-      data.details = {
-        status: "(Local File; " + ((resource as ILocalFile).openstatus + " and " + (resource as ILocalFile).enablestatus).toLowerCase() + ")",
-        Type: (resource as ILocalFile).vsamtype,
-        Permission: (resource as ILocalFile).read + " , " + (resource as ILocalFile).browse,
-        Keylength: (resource as ILocalFile).keylength,
-        "Record Size": (resource as ILocalFile).recordsize,
-        "DS Name": (resource as ILocalFile).dsname,
-      };
-    }
-
     const resourceViewProvider = ResourceInspectorViewProvider.getInstance(extensionUri, treeview);
     const enbededWebview = resourceViewProvider?._manager?._view;
-    resourceViewProvider.reloadData(data, enbededWebview);
+    resourceViewProvider.reloadData(item.getContainedResource(), enbededWebview);
   }
   commands.executeCommand("setContext", "zowe.vscode-extension-for-zowe.showResourceInspector", true);
   commands.executeCommand("workbench.view.extension.inspector-panel");

@@ -52,4 +52,13 @@ export const TransactionMeta: IResourceMeta<ITransaction> = {
   getName(transaction: Resource<ITransaction>): string {
     return transaction.attributes.tranid;
   },
+
+  getHighlights(resource: Resource<ITransaction>) {
+    return [
+      {
+        key: "Initial program",
+        value: resource.attributes.program,
+      },
+    ];
+  },
 };

@@ -42,4 +42,13 @@ export const WebServiceMeta: IResourceMeta<IWebService> = {
   getName(resource: Resource<IWebService>): string {
     return resource.attributes.name;
   },
+
+  getHighlights(resource: Resource<IWebService>) {
+    return [
+      {
+        key: "Status",
+        value: resource.attributes.status,
+      },
+    ];
+  },
 };

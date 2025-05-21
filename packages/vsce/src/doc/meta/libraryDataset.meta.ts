@@ -48,5 +48,14 @@ export const LibraryDatasetMeta: IResourceMeta<ILibraryDataset> = {
     return resource.attributes.dsname;
   },
 
+  getHighlights(resource: Resource<ILibraryDataset>) {
+    return [
+      {
+        key: "Library",
+        value: resource.attributes.library,
+      },
+    ];
+  },
+
   childType: customProgramMeta,
 };

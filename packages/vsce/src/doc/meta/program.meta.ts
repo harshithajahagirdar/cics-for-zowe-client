@@ -51,6 +51,19 @@ export const ProgramMeta: IResourceMeta<IProgram> = {
     return iconName;
   },
 
+  getHighlights(program: Resource<IProgram>) {
+    return [
+      {
+        key: "Status",
+        value: program.attributes.status,
+      },
+      {
+        key: "Type",
+        value: program.attributes.progtype,
+      },
+    ];
+  },
+
   getName(program: Resource<IProgram>): string {
     return program.attributes.program;
   },

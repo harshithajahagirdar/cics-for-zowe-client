@@ -48,4 +48,13 @@ export const TCPIPMeta: IResourceMeta<ITCPIP> = {
   getName(resource: Resource<ITCPIP>): string {
     return resource.attributes.name;
   },
+
+  getHighlights(resource: Resource<ITCPIP>) {
+    return [
+      {
+        key: "Port",
+        value: resource.attributes.port,
+      },
+    ];
+  },
 };

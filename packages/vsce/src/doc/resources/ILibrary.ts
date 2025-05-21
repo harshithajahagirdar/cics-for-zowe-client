@@ -14,4 +14,5 @@ import { IResource } from "./IResource";
 export interface ILibrary extends IResource {
   name: string;
   dsname: string;
+  ranking: string;
 }

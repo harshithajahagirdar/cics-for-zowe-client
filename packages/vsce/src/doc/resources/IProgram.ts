@@ -17,6 +17,5 @@ export interface IProgram extends IResource {
   sharestatus: string;
   length: string;
   changeagrel: string;
-  status: string;
   newcopycnt: string;
 }

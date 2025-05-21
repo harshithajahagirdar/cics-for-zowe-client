@@ -22,24 +22,23 @@ import {
 import * as React from "react";
 import * as vscode from "../common/vscode";
 
+import { IResource } from "../../doc";
 import "../css/style.css";
 
 const ResourceInspector = () => {
   const [search, setSearch] = React.useState("");
 
-  const [riArgs, setRIArgs] = React.useState<{
-    label: string;
-    details: { [key: string]: string; };
-    attributes: { [key: string]: string; };
+  const [resourceInfo, setResourceInfo] = React.useState<{
+    name: string;
+    highlights: { key: string; value: string; }[];
+    resource: IResource;
   }>();
 
   React.useEffect(() => {
     const listener = (event: MessageEvent<vscode.TransformWebviewMessage>): void => {
-      const data = event.data.data;
-      setRIArgs(data);
+      setResourceInfo(event.data.data);
     };
     vscode.addVscMessageListener(listener);
-
     vscode.postVscMessage({ command: "init" });
 
     return () => {
@@ -48,26 +47,24 @@ const ResourceInspector = () => {
   }, []);
 
   return (
-    riArgs && (
+    resourceInfo && (
       <div className="maindiv">
         <VscodeTable>
           <VscodeTableHeader>
             <VscodeTableRow>
               <VscodeTableHeaderCell className="header-cell-1">
-                <div className="div-display-1">{(riArgs.label + "").replace(/Closed|Disabled|Unenabled|\(|\)/g, "")}</div>
-                <div className="div-display-1 div-display-2">{riArgs.details.status + ""}</div>
+                <div className="div-display-1">{resourceInfo.name}</div>
+                <div className="div-display-1 div-display-2">{resourceInfo.resource.status}</div>
               </VscodeTableHeaderCell>
             </VscodeTableRow>
           </VscodeTableHeader>
           <VscodeTableBody>
             <VscodeTableCell className="padding-left-20">
-              {Object.entries(riArgs.details)
-                .filter(([key, value]) => key !== "status")
-                .map(([key, value]) => (
-                  <p className="line">
-                    {key}: {value}
-                  </p>
-                ))}
+              {resourceInfo.highlights.map((highlight) => (
+                <p className="line">
+                  {highlight.key}: {highlight.value}
+                </p>
+              ))}
             </VscodeTableCell>
           </VscodeTableBody>
         </VscodeTable>
@@ -91,8 +88,8 @@ const ResourceInspector = () => {
             </VscodeTableRow>
           </VscodeTableHeader>
           <VscodeTableBody>
-            {Object.entries(riArgs.attributes)
-              .filter(([key, value]) => key.toLowerCase() !== "_keydata")
+            {Object.entries(resourceInfo.resource)
+              .filter(([key, value]) => !key.startsWith("_"))
               .filter(
                 ([key, value]) =>
                   key.toLowerCase().trim().includes(search.toLowerCase().trim()) || value.toLowerCase().trim().includes(search.toLowerCase().trim())

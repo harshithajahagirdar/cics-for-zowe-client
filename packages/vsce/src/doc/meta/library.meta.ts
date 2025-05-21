@@ -44,5 +44,14 @@ export const LibraryMeta: IResourceMeta<ILibrary> = {
     return resource.attributes.name;
   },
 
+  getHighlights(resource: Resource<ILibrary>) {
+    return [
+      {
+        key: "Ranking",
+        value: resource.attributes.ranking,
+      },
+    ];
+  },
+
   childType: LibraryDatasetMeta,
 };

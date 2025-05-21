@@ -13,13 +13,14 @@ import { WebviewView, Uri, Webview } from "vscode";
 import Mustache = require("mustache");
 import { HTMLTemplate } from "@zowe/zowe-explorer-api";
 import { randomUUID } from "crypto";
+import { IContainedResource, IResource } from "../doc";
 
 export class ResourceInspectorView {
   public _view?: WebviewView;
 
   constructor(
     private readonly extensionUri: Uri,
-    private readonly data: { label: string; attributes: any; details: any; }
+    private readonly resource: IContainedResource<IResource>,
   ) { }
 
   initializeWebview(webviewView: WebviewView) {
@@ -41,7 +42,11 @@ export class ResourceInspectorView {
     if (this._view) {
       await this._view.webview.postMessage({
         command: "init",
-        data: this.data,
+        data: {
+          name: this.resource.meta.getName(this.resource.resource),
+          highlights: this.resource.meta.getHighlights(this.resource.resource),
+          resource: this.resource.resource.attributes,
+        },
       });
     }
   }
