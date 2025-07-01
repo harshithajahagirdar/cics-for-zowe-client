@@ -366,6 +366,10 @@
         {
           "command": "cics-extension-for-zowe.showResourceAttributes",
           "when": "config.zowe.cics.showAllCommandsInPalette"
+        },
+        {
+          "command": "cics-extension-for-zowe.inspectResource",
+          "when": "never"
         }
       ],
       "view/title": [
