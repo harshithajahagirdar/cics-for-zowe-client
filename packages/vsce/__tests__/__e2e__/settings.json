@@ -7,5 +7,5 @@
   "extensions.ignoreRecommendations": true,
   "zowe.security.secureCredentialsEnabled": false,
   "editor.fontSize": 14,
-  "cics-extension-for-zowe.showAllCommandsInPalette": false
+  "zowe.cics.showAllCommandsInPalette": false
 }
